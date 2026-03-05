@@ -20,10 +20,10 @@ if(BUILD_TESTING)
 
     add_executable(tests
         tests/main.cpp
-        tests/zug-zug/scripts/lua/test_limitedAlloc.cpp
-        tests/zug-zug/scripts/lua/test_sandbox_libs.cpp
-        tests/zug-zug/scripts/lua/test_sandbox_fs.cpp
-        tests/zug-zug/scripts/lua/test_timeoutGuard.cpp
+        tests/lua/test_limitedAlloc.cpp
+        tests/lua/test_sandbox_libs.cpp
+        tests/lua/test_sandbox_fs.cpp
+        tests/lua/test_timeoutGuard.cpp
         tests/utils/test_filesystem.cpp
     )
     target_compile_features(tests PRIVATE cxx_std_20)

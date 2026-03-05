@@ -1,4 +1,4 @@
-#include "scripts/lua/runtime.hpp"
+#include "lua/runtime.hpp"
 
 #include <doctest/doctest.h>
 #include <filesystem>

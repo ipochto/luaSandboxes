@@ -19,13 +19,13 @@ message(STATUS "Coverage enabled: ${ENABLE_COVERAGE}")
 include(ThirdPartyDependencies)
 
 set(sources
-    src/scripts/lua/runtime.cpp
-    src/scripts/lua/utils.cpp
+    src/lua/runtime.cpp
+    src/lua/utils.cpp
 )
 set(headers
-    src/scripts/lua/runtime.hpp
-    src/scripts/lua/sol2.hpp
-    src/scripts/lua/utils.hpp
+    src/lua/runtime.hpp
+    src/lua/sol2.hpp
+    src/lua/utils.hpp
 
     src/utils/enum_set.hpp
     src/utils/filesystem.hpp
@@ -35,7 +35,6 @@ set(headers
 set(include_dirs
     SYSTEM
     src
-    src/scripts
 )
 
 set(libraries
