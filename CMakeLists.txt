@@ -38,7 +38,6 @@ set(include_dirs
 )
 
 set(libraries
-    cxxopts::cxxopts
     fmt::fmt
     spdlog::spdlog
     lua::lua51
