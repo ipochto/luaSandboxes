@@ -1,6 +1,5 @@
 #include "lua/runtime.hpp"
-
-#include <spdlog/spdlog.h>
+#include "utils/log.hpp"
 
 // clang-format off
 const LuaSandbox::SandboxPresets
@@ -116,7 +115,7 @@ auto LuaSandbox::runFile(const fs::path &scriptFile)
 {
 	auto error = [&](std::string_view msg) {
 		const auto errMsg = std::format("{}: {}", msg, scriptFile.string());
-		spdlog::error("{}", errMsg);
+		log_::error("{}", errMsg);
 		return lua::makeFnCallResult(runtime->state, errMsg, sol::call_status::file);
 	};
 
@@ -168,7 +167,7 @@ auto LuaSandbox::dofileReplace(sol::stack_object fileName)
 	-> sol::protected_function_result
 {
 	if (!fileName.is<std::string>()) {
-		spdlog::error("Unable to execute dofile. Error: bad argument, string expected.");
+		log_::error("Unable to execute dofile. Error: bad argument, string expected.");
 		return {};
 	}
 	const auto filePath = toScriptPath(fileName.as<std::string>());
@@ -176,9 +175,9 @@ auto LuaSandbox::dofileReplace(sol::stack_object fileName)
 	auto scriptResult = runFile(filePath);
 	if (!scriptResult.valid()) {
 		sol::error err = scriptResult;
-		spdlog::error(R"(Unable to execute dofile("{}"). Error: "{}")",
-					  fileName.as<std::string>(),
-					  err.what());
+		log_::error(R"(Unable to execute dofile("{}"). Error: "{}")",
+					fileName.as<std::string>(),
+					err.what());
 		return {};
 	}
 	return scriptResult;
@@ -243,17 +242,17 @@ auto LuaSandbox::requireReplace(sol::stack_object target)
 	-> sol::object
 {
 	if (!target.is<std::string>()) {
-		spdlog::error("Unable to execute 'require'. Error: bad argument, string expected.");
+		log_::error("Unable to execute 'require'. Error: bad argument, string expected.");
 		return sol::nil;
 	}
 	const auto possibleLibName = target.as<std::string>();
 	const auto lib = lua::libByName(possibleLibName);
 	if (!lib) {
-		spdlog::error(R"(require("{}"): library not found.)", possibleLibName);
+		log_::error(R"(require("{}"): library not found.)", possibleLibName);
 		return sol::nil;
 	}
 	if (!require(*lib)) {
-		spdlog::error(R"(require("{}"): library is forbidden.)", possibleLibName);
+		log_::error(R"(require("{}"): library is forbidden.)", possibleLibName);
 		return sol::nil;
 	}
 	const auto libLookupName = lua::libLookupName(*lib);

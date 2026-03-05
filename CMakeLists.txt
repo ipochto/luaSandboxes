@@ -29,6 +29,7 @@ set(headers
 
     src/utils/enum_set.hpp
     src/utils/filesystem.hpp
+    src/utils/log.hpp
     src/utils/optional_ref.hpp
 )
 
@@ -38,7 +39,6 @@ set(include_dirs
 )
 
 set(libraries
-    spdlog::spdlog
     lua::lua51
     sol2::sol2
 )

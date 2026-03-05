@@ -1,9 +1,9 @@
 #include "lua/utils.hpp"
+#include "utils/log.hpp"
 
 #include <array>
 #include <fstream>
 #include <ranges>
-#include <spdlog/spdlog.h>
 
 namespace lua
 {
@@ -59,21 +59,21 @@ namespace lua::memory
 															   : 0;
 
 		if (newSize > (std::numeric_limits<size_t>::max() - usedBase)) {
-			spdlog::error("Lua allocator: arithmetic overflow while computing memory usage "
-						  "[used: {}, requested more for: {}, size_t max: {}]",
-						  usedBase,
-						  newSize,
-						  std::numeric_limits<size_t>::max());
-			allocState->overflow = true;
+			log_::error("Lua allocator: arithmetic overflow while computing memory usage "
+						"[used: {}, requested more for: {}, size_t max: {}]",
+						usedBase,
+						newSize,
+						std::numeric_limits<size_t>::max());
+		allocState->overflow = true;
 			return nullptr;
 		}
 		const size_t newUsed = usedBase + newSize;
 		if (allocState->isLimitEnabled() && newUsed > allocState->limit) {
-			spdlog::error("Lua allocator: memory limit reached "
-						  "[limit: {}, used: {}, requested total: {}]",
-						  allocState->limit,
-						  allocState->used,
-						  newUsed);
+			log_::error("Lua allocator: memory limit reached "
+						"[limit: {}, used: {}, requested total: {}]",
+						allocState->limit,
+						allocState->used,
+						newUsed);
 			allocState->limitReached = true;
 			return nullptr;
 		}
@@ -117,7 +117,7 @@ namespace lua::timeoutGuard
 		if (force) {
 			detach();
 		} else if (armed()) {
-			spdlog::error("Cannot attach timeout watchdog to a new Lua state while it's armed");
+			log_::error("Cannot attach timeout watchdog to a new Lua state while it's armed");
 			return false;
 		}
 		lua = newLua;
@@ -133,17 +133,17 @@ namespace lua::timeoutGuard
 	bool Watchdog::configureHook(InstructionsCount newCheckPeriod, lua_Hook newHook) noexcept
 	{
 		if (armed()) {
-			spdlog::error("Cannot change timeout watchdog hook settings while it's armed");
+			log_::error("Cannot change timeout watchdog hook settings while it's armed");
 			return false;
 		}
 		if (newCheckPeriod <= 0) {
-			spdlog::error("Unable to change timeout watchdog hook settings: "
-						  "Check period has to be a positive integer");
+			log_::error("Unable to change timeout watchdog hook settings: "
+						"Check period has to be a positive integer");
 			return false;
 		}
 		if (newHook == nullptr) {
-			spdlog::error("Unable to change timeout watchdog hook settings: "
-						  "Hook function pointer cannot be null");
+			log_::error("Unable to change timeout watchdog hook settings: "
+						"Hook function pointer cannot be null");
 			return false;
 		}
 		checkPeriod = newCheckPeriod;
@@ -154,21 +154,21 @@ namespace lua::timeoutGuard
 	bool Watchdog::arm(time::milliseconds limit) noexcept
 	{
 		if (armed()) {
-			spdlog::error("Unable to arm timeout watchdog: already armed");
+			log_::error("Unable to arm timeout watchdog: already armed");
 			return false;
 		}
 		if (!attached()) {
-			spdlog::error("Unable to arm timeout watchdog: "
-						  "Lua state is not properly initialized");
+			log_::error("Unable to arm timeout watchdog: "
+						"Lua state is not properly initialized");
 			return false;
 		}
 		if (!CtxRegistry::empty(lua)) {
-			spdlog::error("Unable to arm timeout watchdog: "
-						  "Lua state already has a hook context registered");
+			log_::error("Unable to arm timeout watchdog: "
+						"Lua state already has a hook context registered");
 			return false;
 		}
 		if (lua_gethook(lua) != nullptr) {
-			spdlog::error("Unable to arm timeout watchdog: Lua state already has a hook set");
+			log_::error("Unable to arm timeout watchdog: Lua state already has a hook set");
 			return false;
 		}
 		running = true;
@@ -181,7 +181,7 @@ namespace lua::timeoutGuard
 	bool Watchdog::rearm(time::milliseconds limit) noexcept
 	{
 		if (!armed()) {
-			spdlog::error("Unable to rearm timeout watchdog: it is not currently armed");
+			log_::error("Unable to rearm timeout watchdog: it is not currently armed");
 			return false;
 		}
 		context.start(limit);

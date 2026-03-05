@@ -1,16 +1,5 @@
 include(FetchContent)
 
-find_package(spdlog CONFIG QUIET)
-if (NOT spdlog_FOUND)
-    message(STATUS "spdlog not found, fetching with FetchContent...")
-    FetchContent_Declare(
-        spdlog
-        GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG        v1.15.3
-    )
-    FetchContent_MakeAvailable(spdlog)
-endif()
-
 find_package(Lua 5.1 EXACT QUIET)
 if (Lua_FOUND)
     add_library(lua::lua51 UNKNOWN IMPORTED)
