@@ -29,7 +29,7 @@ if(BUILD_TESTING)
     target_compile_features(tests PRIVATE cxx_std_20)
     target_link_libraries(tests PRIVATE
         doctest::doctest
-        zug-zug::engine
+        luaSandboxes::luaSandboxes
     )
     target_compile_options(tests PRIVATE
         $<$<AND:$<BOOL:${ENABLE_COVERAGE}>,$<PLATFORM_ID:Linux>>:
