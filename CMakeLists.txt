@@ -38,7 +38,6 @@ set(include_dirs
 )
 
 set(libraries
-    fmt::fmt
     spdlog::spdlog
     lua::lua51
     sol2::sol2

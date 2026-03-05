@@ -1,6 +1,5 @@
 #include "lua/runtime.hpp"
 
-#include <fmt/core.h>
 #include <spdlog/spdlog.h>
 
 // clang-format off
