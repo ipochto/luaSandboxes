@@ -3,7 +3,6 @@ project(luaSandboxes LANGUAGES CXX)
 set(luaSandboxes_lib luaSandboxes)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(WARNING "CMAKE_BUILD_TYPE is not set! Defaulting to Debug")
@@ -19,7 +18,7 @@ message(STATUS "Testing enabled: ${BUILD_TESTING}")
 option(ENABLE_COVERAGE "Enable Coverage Flags" OFF)
 message(STATUS "Coverage enabled: ${ENABLE_COVERAGE}")
 
-include(ThirdPartyDependencies)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThirdPartyDependencies.cmake)
 
 set(sources
     src/lua/runtime.cpp
@@ -113,4 +112,4 @@ target_link_options(${luaSandboxes_lib} PRIVATE
 )
 add_library(luaSandboxes::luaSandboxes ALIAS ${luaSandboxes_lib})
 
-include(Tests)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/Tests.cmake)
