@@ -13,6 +13,9 @@ endif()
 option(ENABLE_PROFILING "Enable Profiling Flags" OFF)
 message(STATUS "Profiling enabled: ${ENABLE_PROFILING}")
 
+option(BUILD_TESTING "Enable Testing" OFF)
+message(STATUS "Testing enabled: ${BUILD_TESTING}")
+
 option(ENABLE_COVERAGE "Enable Coverage Flags" OFF)
 message(STATUS "Coverage enabled: ${ENABLE_COVERAGE}")
 
