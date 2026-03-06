@@ -1,43 +1,6 @@
 #include "lua/runtime.hpp"
 #include "utils/log.hpp"
 
-// clang-format off
-const LuaSandbox::SandboxPresets
-LuaSandbox::sandboxPresets{
-	{Presets::Core, {}},
-	{Presets::Minimal,
-		{sol::lib::base,
-		 sol::lib::table}},
-	{Presets::Complete,
-		{sol::lib::base,
-		 sol::lib::coroutine,
-		 sol::lib::math,
-		 sol::lib::os,
-		 sol::lib::string,
-		 sol::lib::table}},
-	{Presets::Custom, {}}
-};
-
-const LuaSandbox::LibsSandboxingRulesMap
-LuaSandbox::libsSandboxingRules{
-	{sol::lib::base,
-		{.allowed = {"assert", "error", "ipairs", "next", "pairs", "pcall", "select",
-					 "tonumber", "tostring", "type", "unpack", "_VERSION", "xpcall"}}},
-	{sol::lib::coroutine,
-		{.allowedAllExceptRestricted = true}},
-	{sol::lib::math,
-		{.allowedAllExceptRestricted = true,
-		 .restricted = {"random", "randomseed"}}},
-	{sol::lib::os,
-		{.allowed = {"clock", "difftime", "time"}}},
-	{sol::lib::string,
-		{.allowedAllExceptRestricted = true,
-		 .restricted = {"dump"}}},
-	{sol::lib::table,
-		{.allowedAllExceptRestricted = true}}
-};
-// clang-format on
-
 void LuaRuntime::reset()
 {
 	if (usesLimitedAllocator()) {
