@@ -2784,4 +2784,4 @@ Lua — безусловно замечательный язык, заслуже
 
 ---
 
-Код в удобоваримой, пригодной к использованию форме можно посмотреть [здесь](https://github.com/ipochto/luaSandboxing/tree/master/src).
+Код в удобоваримой, пригодной к использованию форме можно посмотреть [здесь](https://github.com/ipochto/luaSandboxes/tree/master/src).
