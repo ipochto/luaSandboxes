@@ -14,7 +14,7 @@ else()
         URL https://www.lua.org/ftp/lua-5.1.5.tar.gz
         URL_HASH SHA256=2640fc56a795f29d28ef15e13c34a47e223960b0240e8cb0a82d9b0738695333
         PATCH_COMMAND ${CMAKE_COMMAND} -E copy
-            "${CMAKE_CURRENT_LIST_DIR}/cmake/third-party/lua51-CMakeLists.txt"
+            "${CMAKE_CURRENT_LIST_DIR}/third-party/lua51-CMakeLists.txt"
             "<SOURCE_DIR>/CMakeLists.txt"        
     )
     FetchContent_MakeAvailable(lua51)
