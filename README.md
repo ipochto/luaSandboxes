@@ -2816,7 +2816,7 @@ target_link_libraries(your_app_name PUBLIC luaSandboxes::luaSandboxes)
 ```cpp
 // main.cpp
 
-#include "lua/runtime.hpp" // FetchContent_MakeAvailable` сделает заголовки доступными
+#include "lua/runtime.hpp" // FetchContent_MakeAvailable сделает заголовки доступными
 
 int main()
 {
