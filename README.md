@@ -23,6 +23,8 @@ tags: c++, lua, gamedev, sol2
 - [Hello world](#hello-world-anchor)
 - [Память](#allocators-anchor)
 - [Время выполнения](#timeoutGuard-anchor)
+- [TLDR, дайте пощупать](#tldr-anchor)
+
 
 ## Постановка задачи
 
@@ -2784,4 +2786,50 @@ Lua — безусловно замечательный язык, заслуже
 
 ---
 
+<a id="tldr-anchor"></a>
+
+## Push me, and then just touch me till a can get my...
 Код в удобоваримой, пригодной к использованию форме можно посмотреть [здесь](https://github.com/ipochto/luaSandboxes/tree/master/src).
+
+А чтобы пощупать в своём проекте, достаточно просто подключить статическую библиотеку в которую он собирается. Для чего дополняем свой `CMakeLists.txt` следующим:
+
+```cmake
+include(FetchContent)
+
+# Вытягиваем и компилируем luaSandboxes
+FetchContent_Declare(
+    luaSandboxes
+    GIT_REPOSITORY https://github.com/ipochto/luaSandboxes.git
+    GIT_TAG master
+    GIT_SHALLOW TRUE
+)
+# Расшариваем саму библиотеку и её заголовочные файлы
+FetchContent_MakeAvailable(luaSandboxes) 
+
+...
+
+# Ну и не забываем указать библиотеку при линковке
+target_link_libraries(your_app_name PUBLIC luaSandboxes::luaSandboxes)
+```
+
+Всё, можно развлекаться ;)
+
+```cpp
+// main.cpp
+
+#include "lua/runtime.hpp" // FetchContent_MakeAvailable` сделает заголовки доступными
+
+int main()
+{
+	LuaRuntime lua;
+	LuaSandbox sandbox(lua, LuaSandbox::Presets::Minimal);
+
+	sandbox.run(R"(
+		print ("What the...?")
+	)");
+
+	return 0;
+}
+```
+
+
