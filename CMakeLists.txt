@@ -18,6 +18,10 @@ message(STATUS "Testing enabled: ${BUILD_TESTING}")
 option(ENABLE_COVERAGE "Enable Coverage Flags" OFF)
 message(STATUS "Coverage enabled: ${ENABLE_COVERAGE}")
 
+option(FORCE_BUILD_LUA "Force build Lua from source" OFF)
+message(STATUS "Forced lua build enabled: ${FORCE_BUILD_LUA}")
+
+
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/ThirdPartyDependencies.cmake)
 
 set(sources
