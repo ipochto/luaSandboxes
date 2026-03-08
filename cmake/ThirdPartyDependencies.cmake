@@ -1,7 +1,7 @@
 include(FetchContent)
 
 find_package(Lua 5.1 EXACT QUIET)
-if (Lua_FOUND)
+if (Lua_FOUND AND NOT FORCE_BUILD_LUA)
     add_library(lua::lua51 UNKNOWN IMPORTED)
     set_target_properties(lua::lua51 PROPERTIES
         IMPORTED_LOCATION             "${LUA_LIBRARY}"
