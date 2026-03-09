@@ -2796,6 +2796,7 @@ Lua — безусловно замечательный язык, заслуже
 include(FetchContent)
 
 # Вытягиваем и компилируем luaSandboxes
+# При сборке автоматически подтягиваются сам Lua и sol2, так что их отдельно подключать не нужно
 FetchContent_Declare(
     luaSandboxes
     GIT_REPOSITORY https://github.com/ipochto/luaSandboxes.git
