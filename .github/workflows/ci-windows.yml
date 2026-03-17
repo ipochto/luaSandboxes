@@ -27,6 +27,7 @@ jobs:
   build-windows:
     runs-on: windows-latest
     strategy:
+      fail-fast: false
       matrix:
         preset: [
             windows-clang-cl-debug,
