@@ -1,0 +1,48 @@
+name: CMake CI (macOS)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+      - '**'
+      - '!**.md'
+      - '!documentation/**'
+      - '!.vscode/**'
+      - '!*.yml'
+      - '!*.yaml'
+      - '.github/workflows/ci-linux.yml'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - '**'
+      - '!**.md'
+      - '!documentation/**'
+      - '!.vscode/**'
+      - '!*.yml'
+      - '!*.yaml'
+      - '.github/workflows/ci-linux.yml'
+
+jobs:
+  build-linux:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        preset: [
+            macos-clang-debug,
+            macos-clang-release      
+        ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake --preset=${{ matrix.preset }}
+
+      - name: Build
+        run: cmake --build --preset=${{ matrix.preset }} --parallel
+
+      - name: Run Tests
+        working-directory: build/${{ matrix.preset }}
+        run: ctest --output-on-failure
