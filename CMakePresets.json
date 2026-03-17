@@ -44,6 +44,15 @@
             }
         },
         {
+            "name": "platform-macos",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
             "name": "compiler-gcc",
             "hidden": true,
             "environment": {
@@ -266,7 +275,43 @@
                 "compiler-msvc",
                 "profile"
             ]
-        }        
+        },
+        {
+            "name": "macos-clang-debug",
+            "displayName": "Debug macOS Apple Clang",
+            "description": "Build with debug information and no optimizations",
+            "inherits": [
+                "base",
+                "platform-macos",
+                "generator-ninja",
+                "compiler-clang",
+                "debug"
+            ]
+        },
+        {
+            "name": "macos-clang-release",
+            "displayName": "Release macOS Apple Clang",
+            "description": "Optimized build with no debug info",
+            "inherits": [
+                "base",
+                "platform-macos",
+                "generator-ninja",
+                "compiler-clang",
+                "release"
+            ]
+        },
+        {
+            "name": "macos-clang-profile",
+            "displayName": "Profiling macOS Apple Clang",
+            "description": "RelWithDebInfo build with profiling options",
+            "inherits": [
+                "base",
+                "platform-macos",
+                "generator-ninja",
+                "compiler-clang",
+                "profile"
+            ]
+        }
     ],
     "buildPresets": [
         {
@@ -337,6 +382,21 @@
         {
             "name": "windows-msvc-profile",
             "configurePreset": "windows-msvc-profile",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "macos-clang-debug",
+            "configurePreset": "macos-clang-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "macos-clang-release",
+            "configurePreset": "macos-clang-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "macos-clang-profile",
+            "configurePreset": "macos-clang-profile",
             "configuration": "RelWithDebInfo"
         }
     ]
