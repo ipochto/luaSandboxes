@@ -9,9 +9,9 @@ on:
       - '!**.md'
       - '!documentation/**'
       - '!.vscode/**'
-      - '!*.yml'
-      - '!*.yaml'
-      - '.github/workflows/ci-linux.yml'
+      - '!**/*.yml'
+      - '!**/*.yaml'
+      - '.github/workflows/ci-macos.yml'
   pull_request:
     branches: [ master ]
     paths:
@@ -19,12 +19,12 @@ on:
       - '!**.md'
       - '!documentation/**'
       - '!.vscode/**'
-      - '!*.yml'
-      - '!*.yaml'
-      - '.github/workflows/ci-linux.yml'
+      - '!**/*.yml'
+      - '!**/*.yaml'
+      - '.github/workflows/ci-macos.yml'
 
 jobs:
-  build-linux:
+  build-macos:
     runs-on: macos-latest
     strategy:
       fail-fast: false
