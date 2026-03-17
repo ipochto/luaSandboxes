@@ -40,7 +40,6 @@ set(headers
 )
 
 set(include_dirs
-    SYSTEM
     src
 )
 
