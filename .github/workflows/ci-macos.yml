@@ -27,6 +27,7 @@ jobs:
   build-linux:
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
         preset: [
             macos-clang-debug,
