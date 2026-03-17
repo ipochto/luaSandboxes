@@ -53,7 +53,7 @@ jobs:
         run: cmake --preset=${{ matrix.preset }}
 
       - name: Build
-        run: cmake --build --preset=${{ matrix.preset }} -- -j$(nproc)
+        run: cmake --build --preset=${{ matrix.preset }} --parallel
 
       - name: Run Tests
         working-directory: build/${{ matrix.preset }}
